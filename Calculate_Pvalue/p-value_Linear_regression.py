@@ -102,4 +102,8 @@ myDF3 = pd.DataFrame()
 myDF3["Coefficients"],myDF3["Standard Errors"],myDF3["t values"],myDF3["Probabilites"] = [params,sd_b,ts_b,p_values]
 print(myDF3)
 
-#Large values of t indicate that the null hypothesis can be rejected and that the corresponding coefficient is not zero. The second column, p-value, expresses the results of the hypothesis test as a significance level. Conventionally, p-values smaller than 0.05 are taken as evidence that the population coefficient is nonzero.
+#Large values of t indicate that the null hypothesis can be rejected and 
+#that the corresponding coefficient is not zero. The second column, p-value, 
+#expresses the results of the hypothesis test as a significance level. 
+#Conventionally, p-values smaller than 0.05 are taken as evidence that 
+#the population coefficient is nonzero.
