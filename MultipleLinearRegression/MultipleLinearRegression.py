@@ -119,6 +119,7 @@ print(1-stats.f.cdf(est2.fvalue,1,7))
 ss_mean = sum((mouse.sizes - np.mean(mouse.sizes))**2)
 ss_simple = sum((mouse.sizes - est2.fittedvalues)**2)
 f_simple = ((ss_mean - ss_simple) / (2 - 1))/ (ss_simple/ (len(mouse) - 2))
+print(1-stats.f.cdf(f_simple,1,7))
 print(est2.summary())
 
 #######################################################
