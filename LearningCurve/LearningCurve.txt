@@ -1,0 +1,3 @@
+https://www.dataquest.io/blog/learning-curves-machine-learning/
+In a nutshell, a learning curve shows how error changes as the training set size increases.
+As we increase the training set size, the model cannot fit perfectly anymore the training set. So the training error becomes larger. However, the model is trained on more data, so it manages to fit better the validation set. Thus, the validation error decreases.
