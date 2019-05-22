@@ -1,3 +1,17 @@
 https://www.dataquest.io/blog/learning-curves-machine-learning/
+
 In a nutshell, a learning curve shows how error changes as the training set size increases.
 As we increase the training set size, the model cannot fit perfectly anymore the training set. So the training error becomes larger. However, the model is trained on more data, so it manages to fit better the validation set. Thus, the validation error decreases.
+
+
+High Bias Learning Curve - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/HighBias_LC.PNG
+
+High Variance Learning Curve - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/HighVariance_LC.PNG
+
+
+Effect Of Training Data Increase On Errors - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors.png
+
+
+Effect Of Training Data Increase On Errors 2 - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors_2.png
+
+Ideal Learning Curve [Irreducible Error]- https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Ideal_Learning_Curve.png
