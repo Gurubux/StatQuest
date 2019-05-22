@@ -1,0 +1,210 @@
+#https://github.com/Gurubux/StatQuest/blob/master/GridSearchCV_RandomizedSearchCV/08_grid_searchnew.ipynb
+MORE EFFICIENT PARAMETER TUNING USING GRIDSEARCHCV GridSearchCV()
+from sklearn.model_selection import GridSearchCV
+
+## create a parameter grid: map the parameter names to the values that should be searched#
+k_range = list(range(1, 31))
+param_grid = dict(n_neighbors=list(range(1, 31))) #{'n_neighbors': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]}
+
+# instantiate the grid
+grid = GridSearchCV(knn, param_grid, cv=10, scoring='accuracy', return_train_score=False)
+
+# fit the grid with data
+grid.fit(X, y)
+
+# view the results as a pandas DataFrame
+import pandas as pd
+pd.DataFrame(grid.cv_results_)[['mean_test_score', 'std_test_score', 'params']]
+	mean_test_score	std_test_score	params
+>>> 
+0	0.960000	0.053333	{'n_neighbors': 1}
+1	0.953333	0.052068	{'n_neighbors': 2}
+2	0.966667	0.044721	{'n_neighbors': 3}
+3	0.966667	0.044721	{'n_neighbors': 4}
+4	0.966667	0.044721	{'n_neighbors': 5}
+5	0.966667	0.044721	{'n_neighbors': 6}
+6	0.966667	0.044721	{'n_neighbors': 7}
+7	0.966667	0.044721	{'n_neighbors': 8}
+8	0.973333	0.032660	{'n_neighbors': 9}
+9	0.966667	0.044721	{'n_neighbors': 10}
+10	0.966667	0.044721	{'n_neighbors': 11}
+11	0.973333	0.032660	{'n_neighbors': 12}
+12	0.980000	0.030551	{'n_neighbors': 13}
+13	0.973333	0.044222	{'n_neighbors': 14}
+14	0.973333	0.032660	{'n_neighbors': 15}
+15	0.973333	0.032660	{'n_neighbors': 16}
+16	0.973333	0.032660	{'n_neighbors': 17}
+17	0.980000	0.030551	{'n_neighbors': 18}
+18	0.973333	0.032660	{'n_neighbors': 19}
+19	0.980000	0.030551	{'n_neighbors': 20}
+20	0.966667	0.033333	{'n_neighbors': 21}
+21	0.966667	0.033333	{'n_neighbors': 22}
+22	0.973333	0.032660	{'n_neighbors': 23}
+23	0.960000	0.044222	{'n_neighbors': 24}
+24	0.966667	0.033333	{'n_neighbors': 25}
+25	0.960000	0.044222	{'n_neighbors': 26}
+26	0.966667	0.044721	{'n_neighbors': 27}
+27	0.953333	0.042687	{'n_neighbors': 28}
+28	0.953333	0.042687	{'n_neighbors': 29}
+29	0.953333	0.042687	{'n_neighbors': 30}
+
+# plot the results
+plt.plot(k_range, grid.cv_results_['mean_test_score'])
+plt.xlabel('Value of K for KNN')
+plt.ylabel('Cross-Validated Accuracy')
+
+# examine the best model
+print(grid.best_score_)
+print(grid.best_params_)
+print(grid.best_estimator_)
+>>>
+0.98
+{'n_neighbors': 13}
+KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=1, n_neighbors=13, p=2,
+           weights='uniform')
+
+-------------------------------------------------------------------------------------------------------------
+SEARCHING MULTIPLE PARAMETERS SIMULTANEOUSLY
+
+Example: 
+	tuning max_depth and min_samples_leaf for a DecisionTreeClassifier
+	Could tune parameters independently: change max_depth while leaving min_samples_leaf at its default value, and vice versa
+	But, best performance might be achieved when neither parameter is at its default value
+
+# define the parameter values that should be searched
+k_range = list(range(1, 31))
+weight_options = ['uniform', 'distance']
+# create a parameter grid: map the parameter names to the values that should be searched
+param_grid = dict(n_neighbors=k_range, weights=weight_options) # {'n_neighbors': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 'weights': ['uniform', 'distance']}
+
+# instantiate and fit the grid
+grid = GridSearchCV(knn, param_grid, cv=10, scoring='accuracy', return_train_score=False)
+grid.fit(X, y)
+
+pd.DataFrame(grid.cv_results_)[['mean_test_score', 'std_test_score', 'params']]
+>>>
+	mean_test_score	std_test_score	params
+0	0.960000	0.053333	{'n_neighbors': 1, 'weights': 'uniform'}
+1	0.960000	0.053333	{'n_neighbors': 1, 'weights': 'distance'}
+2	0.953333	0.052068	{'n_neighbors': 2, 'weights': 'uniform'}
+3	0.960000	0.053333	{'n_neighbors': 2, 'weights': 'distance'}
+4	0.966667	0.044721	{'n_neighbors': 3, 'weights': 'uniform'}
+5	0.966667	0.044721	{'n_neighbors': 3, 'weights': 'distance'}
+6	0.966667	0.044721	{'n_neighbors': 4, 'weights': 'uniform'}
+7	0.966667	0.044721	{'n_neighbors': 4, 'weights': 'distance'}
+8	0.966667	0.044721	{'n_neighbors': 5, 'weights': 'uniform'}
+9	0.966667	0.044721	{'n_neighbors': 5, 'weights': 'distance'}
+10	0.966667	0.044721	{'n_neighbors': 6, 'weights': 'uniform'}
+11	0.966667	0.044721	{'n_neighbors': 6, 'weights': 'distance'}
+12	0.966667	0.044721	{'n_neighbors': 7, 'weights': 'uniform'}
+13	0.966667	0.044721	{'n_neighbors': 7, 'weights': 'distance'}
+14	0.966667	0.044721	{'n_neighbors': 8, 'weights': 'uniform'}
+15	0.966667	0.044721	{'n_neighbors': 8, 'weights': 'distance'}
+16	0.973333	0.032660	{'n_neighbors': 9, 'weights': 'uniform'}
+17	0.973333	0.032660	{'n_neighbors': 9, 'weights': 'distance'}
+18	0.966667	0.044721	{'n_neighbors': 10, 'weights': 'uniform'}
+19	0.973333	0.032660	{'n_neighbors': 10, 'weights': 'distance'}
+20	0.966667	0.044721	{'n_neighbors': 11, 'weights': 'uniform'}
+21	0.973333	0.032660	{'n_neighbors': 11, 'weights': 'distance'}
+22	0.973333	0.032660	{'n_neighbors': 12, 'weights': 'uniform'}
+23	0.973333	0.044222	{'n_neighbors': 12, 'weights': 'distance'}
+24	0.980000	0.030551	{'n_neighbors': 13, 'weights': 'uniform'}
+25	0.973333	0.032660	{'n_neighbors': 13, 'weights': 'distance'}
+26	0.973333	0.044222	{'n_neighbors': 14, 'weights': 'uniform'}
+27	0.973333	0.032660	{'n_neighbors': 14, 'weights': 'distance'}
+28	0.973333	0.032660	{'n_neighbors': 15, 'weights': 'uniform'}
+29	0.980000	0.030551	{'n_neighbors': 15, 'weights': 'distance'}
+30	0.973333	0.032660	{'n_neighbors': 16, 'weights': 'uniform'}
+31	0.973333	0.032660	{'n_neighbors': 16, 'weights': 'distance'}
+32	0.973333	0.032660	{'n_neighbors': 17, 'weights': 'uniform'}
+33	0.980000	0.030551	{'n_neighbors': 17, 'weights': 'distance'}
+34	0.980000	0.030551	{'n_neighbors': 18, 'weights': 'uniform'}
+35	0.973333	0.032660	{'n_neighbors': 18, 'weights': 'distance'}
+36	0.973333	0.032660	{'n_neighbors': 19, 'weights': 'uniform'}
+37	0.980000	0.030551	{'n_neighbors': 19, 'weights': 'distance'}
+38	0.980000	0.030551	{'n_neighbors': 20, 'weights': 'uniform'}
+39	0.966667	0.044721	{'n_neighbors': 20, 'weights': 'distance'}
+40	0.966667	0.033333	{'n_neighbors': 21, 'weights': 'uniform'}
+41	0.966667	0.044721	{'n_neighbors': 21, 'weights': 'distance'}
+42	0.966667	0.033333	{'n_neighbors': 22, 'weights': 'uniform'}
+43	0.966667	0.044721	{'n_neighbors': 22, 'weights': 'distance'}
+44	0.973333	0.032660	{'n_neighbors': 23, 'weights': 'uniform'}
+45	0.973333	0.032660	{'n_neighbors': 23, 'weights': 'distance'}
+46	0.960000	0.044222	{'n_neighbors': 24, 'weights': 'uniform'}
+47	0.973333	0.032660	{'n_neighbors': 24, 'weights': 'distance'}
+48	0.966667	0.033333	{'n_neighbors': 25, 'weights': 'uniform'}
+49	0.973333	0.032660	{'n_neighbors': 25, 'weights': 'distance'}
+50	0.960000	0.044222	{'n_neighbors': 26, 'weights': 'uniform'}
+51	0.966667	0.044721	{'n_neighbors': 26, 'weights': 'distance'}
+52	0.966667	0.044721	{'n_neighbors': 27, 'weights': 'uniform'}
+53	0.980000	0.030551	{'n_neighbors': 27, 'weights': 'distance'}
+54	0.953333	0.042687	{'n_neighbors': 28, 'weights': 'uniform'}
+55	0.973333	0.032660	{'n_neighbors': 28, 'weights': 'distance'}
+56	0.953333	0.042687	{'n_neighbors': 29, 'weights': 'uniform'}
+57	0.973333	0.032660	{'n_neighbors': 29, 'weights': 'distance'}
+58	0.953333	0.042687	{'n_neighbors': 30, 'weights': 'uniform'}
+59	0.966667	0.033333	{'n_neighbors': 30, 'weights': 'distance'}
+
+# examine the best model
+print(grid.best_score_)
+print(grid.best_params_)
+#0.98 {'n_neighbors': 13, 'weights': 'uniform'}
+
+-------------------------------------------------------------------------------------------------------------
+USING THE BEST PARAMETERS TO MAKE PREDICTIONS
+
+# train your model using all data and the best known parameters
+knn = KNeighborsClassifier(n_neighbors=13, weights='uniform')
+knn.fit(X, y)
+# make a prediction on out-of-sample data
+knn.predict([[3, 5, 4, 2]])
+
+
+# shortcut: GridSearchCV automatically refits the best model using all of the data
+grid.predict([[3, 5, 4, 2]])
+
+-------------------------------------------------------------------------------------------------------------
+REDUCING COMPUTATIONAL EXPENSE USING `RANDOMIZEDSEARCHCV`
+- Searching many different parameters at once may be computationally infeasible
+- `RandomizedSearchCV` searches a subset of the parameters, and you control the computational "budget"
+
+from sklearn.model_selection import RandomizedSearchCV
+
+# specify "parameter distributions" rather than a "parameter grid"
+param_dist = dict(n_neighbors=k_range, weights=weight_options)
+
+# n_iter controls the number of searches
+rand = RandomizedSearchCV(knn, param_dist, cv=10, scoring='accuracy', n_iter=10, random_state=5, return_train_score=False)
+rand.fit(X, y)
+pd.DataFrame(rand.cv_results_)[['mean_test_score', 'std_test_score', 'params']]
+>>>
+	mean_test_score	std_test_score	params
+0	0.973333	0.032660	{'weights': 'distance', 'n_neighbors': 16}
+1	0.966667	0.033333	{'weights': 'uniform', 'n_neighbors': 22}
+2	0.980000	0.030551	{'weights': 'uniform', 'n_neighbors': 18}
+3	0.966667	0.044721	{'weights': 'uniform', 'n_neighbors': 27}
+4	0.953333	0.042687	{'weights': 'uniform', 'n_neighbors': 29}
+5	0.973333	0.032660	{'weights': 'distance', 'n_neighbors': 10}
+6	0.966667	0.044721	{'weights': 'distance', 'n_neighbors': 22}
+7	0.973333	0.044222	{'weights': 'uniform', 'n_neighbors': 14}
+8	0.973333	0.044222	{'weights': 'distance', 'n_neighbors': 12}
+9	0.973333	0.032660	{'weights': 'uniform', 'n_neighbors': 15}
+
+# examine the best model
+print(rand.best_score_)
+print(rand.best_params_)
+#0.98  {'weights': 'uniform', 'n_neighbors': 18}
+
+# run RandomizedSearchCV 20 times (with n_iter=10) and record the best score
+best_scores = []
+for _ in range(20):
+    rand = RandomizedSearchCV(knn, param_dist, cv=10, scoring='accuracy', n_iter=10, return_train_score=False)
+    rand.fit(X, y)
+    best_scores.append(round(rand.best_score_, 3))
+print(best_scores)
+#[0.973, 0.98, 0.98, 0.973, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.973, 0.98, 0.98, 0.98, 0.973, 0.98]
+
+
+
+
