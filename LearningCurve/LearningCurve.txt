@@ -1,8 +1,9 @@
 https://www.dataquest.io/blog/learning-curves-machine-learning/
-
+------------------------------------------------------------------------------------------------------
 In a nutshell, a learning curve shows how error changes as the training set size increases.
 As we increase the training set size, the model cannot fit perfectly anymore the training set. So the training error becomes larger. However, the model is trained on more data, so it manages to fit better the validation set. Thus, the validation error decreases.
 
+------------------------------------------------------------------------------------------------------
 
 High Bias Learning Curve - 
 	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Bias_LC.png
@@ -13,11 +14,121 @@ High Variance Learning Curve -
 	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Variance_LC.png
 	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/HighVariance_LC.PNG
 	A narrow gap indicates low variance. 
+------------------------------------------------------------------------------------------------------
+I.
+PROBLEM: 
+		High bias and low variance - UNDERFITS the data. 
+		AVOID : Adding Training data won`t count.
+SOLUTIONS:
+		1. Change to a more complex learning algorithm.
+		2. Adding Features to train model.(If no more data feature can be collected use Polynomial features(High degree))
+		3. Decreasing the regularization of the current learning algorithm, if that’s the case. In a nutshell, regularization prevents the 		algorithm from fitting the training data too well. If we decrease regularization, the model will fit training data better, and, 	as a consequence, the variance will increase and the bias will decrease.
+EXAMPLE : 
+		LINEAR REGRESSION - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_LinRegress-HighBias_LowVariance_Underfits.PNG
 
-
+------------------------------------------------------------------------------------------------------
+II.
+PROBLEM: 
+		Low bias and high variance - OVERFITS the data. 
+		AVOID : Adding Features will make model more complex and thus add to overfitting.
+SOLUTIONS:
+		1. Adding Training data
+		2. Reducing the numbers of features in the training data we currently use. The algorithm will still fit the training data very 			well, but due to the decreased number of features, it will build less complex models. This should increase the bias and 			decrease the variance.
+		3. Increase the regularization for our current learning algorithm. This should decrease the variance and increase the bias. Adjust 		the maximum number of leaf nodes in each decision tree. RandomForestRegressor(max_leaf_nodes = 350)
+EXAMPLE : 
+		RANDOM FOREST - 
+		Problem  - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_RandForest-LowBias_HighVariance_Overfits.png
+		Improved - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_RandForest-LowBias_HighVariance_Overfits_improved.png 
+Further Solutions: 
+	Feature selection.
+	Hyperparameter optimization.
+------------------------------------------------------------------------------------------------------
 Effect Of Training Data Increase On Errors - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors.png
 
 
 Effect Of Training Data Increase On Errors 2 - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors_2.png
-
+------------------------------------------------------------------------------------------------------
 Ideal Learning Curve [Irreducible Error]- https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Ideal_Learning_Curve.png
+
+
+Code:https://github.com/Gurubux/Data-Lit/blob/master/2-StatisticsAndProbability/2.1-CreditScoring/Loan_Default_Prediction.ipynb
+import numpy as np
+from sklearn.svm import SVC
+from sklearn.model_selection import learning_curve
+from sklearn.model_selection import ShuffleSplit
+
+def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)"""Or train_sizes=[ 880 2860 4840 6820 8800]"""):
+    #plotting basic
+    plt.figure()
+    plt.title(title)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+
+    # Calling Funtion learning_curve
+    train_sizes, train_scores, test_scores = learning_curve(
+        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    
+    # Calculate Mean and STD of the train_scores and test_scores
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+   
+    plt.grid()
+    
+    #Confidence Intervals
+    plt.fill_between(train_sizes, train_scores_mean - 2*train_scores_std,
+                     train_scores_mean + 2*train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - 2*test_scores_std,
+                     test_scores_mean + 2*test_scores_std, alpha=0.1, color="g")
+
+    #Plotting train_scores_mean and test_scores_mean
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+    return plt
+
+
+X, y = data_clean.iloc[:,:-1].values, data_clean.iloc[:,-1].values
+
+title = "Learning Curves (Logistic Regression)"
+
+cv = ShuffleSplit(n_splits=100, test_size=0.2, random_state=0) # cv = 5 # Cross validation with 100 iterations to get smoother mean test and train score curves, each time with 20% data randomly selected as a validation set.
+
+estimator = linear_model.LogisticRegression() # For Regression : LinearRegression, SVR, RandomForest etc. For Classification LogisticRegression, SVC, RandomForest etc.
+
+plt = plot_learning_curve(estimator, title, X, y, ylim=(0.75, 0.90), cv=cv, n_jobs=4)
+plt.show()
+
+
+
+
+https://www.dataquest.io/blog/learning-curves-machine-learning/
+### Bundling our previous work into a function ###
+def plot_learning_curve_2(estimator, data, features, target, train_sizes, cv):
+	train_sizes, train_scores, validation_scores = learning_curve(
+	estimator, data[features], data[target], train_sizes = train_sizes,
+	cv = cv, scoring = 'neg_mean_squared_error')
+	train_scores_mean = -train_scores.mean(axis = 1)
+	validation_scores_mean = -validation_scores.mean(axis = 1)
+	plt.plot(train_sizes, train_scores_mean, label = 'Training error')
+	plt.plot(train_sizes, validation_scores_mean, label = 'Validation error')
+	plt.ylabel('MSE', fontsize = 14)
+	plt.xlabel('Training set size', fontsize = 14)
+	title = 'Learning curves for a ' + str(estimator).split('(')[0] + ' model'
+	plt.title(title, fontsize = 18, y = 1.03)
+	plt.legend()
+	plt.ylim(0,40)
+	### Plotting the two learning curves ###
+	from sklearn.ensemble import RandomForestRegressor
+	plt.figure(figsize = (16,5))
+	for model, i in [(RandomForestRegressor(), 1), (LinearRegression(),2)]:
+	plt.subplot(1,2,i)
+
+plot_learning_curve_2(model, electricity, features, target, train_sizes, 5)
