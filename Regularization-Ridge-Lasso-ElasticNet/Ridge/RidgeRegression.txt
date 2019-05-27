@@ -1,3 +1,4 @@
+https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ridge-and-lasso-regression/
 1. Example that shows main ideas behind Ridge Regression
 2. Go into details about how ridge regression works
 3. Show how RR works in variety of situations
@@ -25,7 +26,7 @@
 	 	- If slope is high(steep), "y" is highly sensitive to variations in "X"
 	 	- If slope is small(gradual), "y" is less sensitive to variations in "X"
 	 	- In our example RR penalty results in a line that has smaller slope when lamba(λ) is 1
-	 	- As the λ is increased to 2,3... the slope becomes smaller and gets asymptotically close to 0 and the RSS keeps on increasing, increasing the bias, and gradually reducing the variance. Finaly RSS becomes TSS
+	 	- As the λ is increased to 2,3... the slope becomes smaller and gets asymptotically close to 0(Not zero Completely) and the RSS keeps on increasing, increasing the bias, and gradually reducing the variance. Finaly RSS becomes TSS
 	 	- How to decide on lamba(λ) : Try a bunch of values for Lambda and use cross-validation(typically 10-fold), to determine which one results in the lowest Variance
 3. Show how RR works in variety of situations
 	- CONTINOUS VARIABLE
