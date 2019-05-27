@@ -1,0 +1,53 @@
+1. Example that shows main ideas behind Ridge Regression
+2. Go into details about how ridge regression works
+3. Show how RR works in variety of situations
+4. How RR can solve the unsolvable.
+
+1. Example that shows main ideas behind Ridge Regression
+	It is to find a New Line that does'nt fit the Training data as well as normal LeastSquare equation does(to avoid Overfitting). In other words we introduce(or increase) small amount of bias into how the new Line fits the data :-( . And in return we get a significant drop in Variance  :-) . That means, by starting with slighly worse fit, RR can provide better long term predictions.
+	
+2. Go into details about how ridge regression works	
+	"RR Penalty is the λ times sum of all squared paramaters, except the y-intercept"
+		______________________________
+	   /						 	 /
+	  /	y =  intercept + m X + λ m²	/
+	 /_____________________________/ 
+
+	 Multiple Linear regression
+	    ________________________________________________________________
+	   /						 	 								   /
+	  /	y =  intercept + m₁X₁ + m₂X₂+....+ λ [ m₁² + m₂² +...+ mₙⁿ ]	  /
+	 /_______________________________________________________________/ 
+
+	 	where,
+	 			λ [ m₁² + m₂² +...+ mₙⁿ ]	 -> RR Penalty
+	 Effect that RR penalty has on how the line is fit to the data
+	 	- If slope is high(steep), "y" is highly sensitive to variations in "X"
+	 	- If slope is small(gradual), "y" is less sensitive to variations in "X"
+	 	- In our example RR penalty results in a line that has smaller slope when lamba(λ) is 1
+	 	- As the λ is increased to 2,3... the slope becomes smaller and gets asymptotically close to 0 and the RSS keeps on increasing, increasing the bias, and gradually reducing the variance. Finaly RSS becomes TSS
+	 	- How to decide on lamba(λ) : Try a bunch of values for Lambda and use cross-validation(typically 10-fold), to determine which one results in the lowest Variance
+3. Show how RR works in variety of situations
+	- CONTINOUS VARIABLE
+	- DISCRETE VARIABLE
+		____________________________________________
+	   /						 				   /
+	  /	y =  intercept + mX + λ (MeanDifference)² /
+	 /___________________________________________/ 
+	 	where,
+	 			λ (MeanDifference)² -> RR Penalty
+
+
+	- LOGISTICE REGRESSION
+		_________________________________________________
+	   /						 	 					/
+	  /	y =  Sum Of Likelihood + λ m²   /
+	 /________________________________________________/ 
+	 	
+
+
+
+4. How RR can solve the unsolvable.
+	If we have 2 paramaters we need atleast two data points, If we have 3 paramaters we need atleast three data points to plot a plain.
+	What if we don`t have enough data?
+		We still can perform predictions by using Cross-validation and Ridge Regression Penalty. 
