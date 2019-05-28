@@ -1,4 +1,5 @@
 https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ridge-and-lasso-regression/
+https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a
 1. Example that shows main ideas behind Ridge Regression
 2. Go into details about how ridge regression works
 3. Show how RR works in variety of situations
@@ -13,6 +14,7 @@ https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ri
 	   /						 	 /
 	  /	y =  intercept + m X + λ m²	/
 	 /_____________________________/ 
+		Y ≈ β0 + β1X1 + β2X2 + …+ βpXp
 
 	 Multiple Linear regression
 	    ________________________________________________________________
@@ -22,12 +24,12 @@ https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ri
 
 	 	where,
 	 			λ [ m₁² + m₂² +...+ mₙⁿ ]	 -> RR Penalty
-	 Effect that RR penalty has on how the line is fit to the data
+	 Effect that RR penalty has on HOW the line is fit to the data
 	 	- If slope is high(steep), "y" is highly sensitive to variations in "X"
 	 	- If slope is small(gradual), "y" is less sensitive to variations in "X"
 	 	- In our example RR penalty results in a line that has smaller slope when lamba(λ) is 1
-	 	- As the λ is increased to 2,3... the slope becomes smaller and gets asymptotically close to 0(Not zero Completely) and the RSS keeps on increasing, increasing the bias, and gradually reducing the variance. Finaly RSS becomes TSS
-	 	- How to decide on lamba(λ) : Try a bunch of values for Lambda and use cross-validation(typically 10-fold), to determine which one results in the lowest Variance
+	 	- As the λ is increased to 2,3... the slope becomes smaller and gets asymptotically close to 0(Not zero Completely) and the RSS keeps on increasing, increasing the bias, and gradually reducing the variance. Finaly RSS becomes Very close TSS thus underfitting. Hence an ideal value of λ is important.
+	 	- How to decide on lamba(λ) : Try a bunch of values for Lambda and use cross-validation(typically 10-fold), to determine which one results in the lowest Variance.
 3. Show how RR works in variety of situations
 	- CONTINOUS VARIABLE
 	- DISCRETE VARIABLE
@@ -52,3 +54,45 @@ https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ri
 	If we have 2 paramaters we need atleast two data points, If we have 3 paramaters we need atleast three data points to plot a plain.
 	What if we don`t have enough data?
 		We still can perform predictions by using Cross-validation and Ridge Regression Penalty. 
+
+
+
+
+A simple relation for linear regression looks like this. Here Y represents the learned relation and β represents the coefficient estimates for different variables or predictors(X).
+				Y ≈ β0 + β1X1 + β2X2 + …+ βpXp
+
+							  							ₙ				ₙ			 ₙ
+Loss Functiion = 	RSS (Residual sum of squares)	=	Σ (yᵢ - ŷᵢ)²  =	Σ (yᵢ - β0 - Σ ( βⱼXᵢⱼ) )²
+									   				   ᶦ⁼¹			    ᶦ⁼¹         ʲ⁼¹
+
+Now, this will adjust the coefficients based on your training data. If there is noise in the training data, then the estimated coefficients won’t generalize well to the future data. This is where regularization comes in and "shrinks or regularizes" these learned estimates towards zero.
+----------------------------------------------------
+RIDGE REGRESSION	
+----------------------------------------------------
+		  												ₙ			 				ₙ			 ₙ					 ₙ
+Loss Functiion = 	RSS (Residual sum of squares)	=	Σ (yᵢ - ŷᵢ)² + Penalty =	Σ (yᵢ - β0 - Σ ( βⱼXᵢⱼ) )²  +  λ Σ ( βⱼ)²
+								+   				   ᶦ⁼¹			 			   ᶦ⁼¹         ʲ⁼¹					ʲ⁼¹
+							 Penalty		   				   	Where,
+									   				   			λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
+
+Above formulae shows ridge regression, where the RSS is modified by adding the shrinkage quantity. Now, the coefficients are estimated by minimizing this function. Here, λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
+
+When λ = 0, the penalty term has no eﬀect, and the estimates produced by ridge regression will be equal to least squares. However, "AS Λ→∞, THE IMPACT OF THE SHRINKAGE PENALTY GROWS", and the ridge regression coeﬃcient estimates will "approach zero. "	
+
+As can be seen, selecting a good value of λ is critical. "CROSS VALIDATION" comes in handy for this purpose. The coefficient estimates produced by this method are also known as the L2 norm.
+
+----------------------------------------------------
+SCALING REQUIRED IN RIDGE REGRESSION
+----------------------------------------------------
+
+The coefficients that are produced by the standard least squares method are scale equivariant, i.e. if we multiply each input by c then the corresponding coefficients are scaled by a factor of 1/c. Therefore, regardless of how the predictor is scaled, the multiplication of predictor and coefficient(Xjβj) remains the same. However, this is not the case with ridge regression, and therefore, we need to standardize the predictors or bring the predictors to the same scale before performing ridge regression. The formula used to do this is given below.
+
+CODE
+#https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ridge-and-lasso-regression/
+#https://github.com/Gurubux/StatQuest/blob/master/Regularization-Ridge-Lasso-ElasticNet/Ridge_Lasso_Elastic-net.ipynb
+from sklearn.linear_model import Ridge
+## training the model
+ridgeReg = Ridge(alpha=100, normalize=True)
+ridgeReg.fit(x_train,y_train)
+pred = ridgeReg.predict(x_cv)
+ridgeReg.score(y_test,pred)

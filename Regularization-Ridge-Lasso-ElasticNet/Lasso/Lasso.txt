@@ -1,0 +1,50 @@
+LASSO (Least Absolute Shrinkage Selector Operator), is quite similar to ridge, but lets understand the difference them by implementing it in our big mart problem.
+
+---------------------------------------------------
+"DIFFERENCE BETWEEN RIDGE AND LASSO?"
+---------------------------------------------------
+1. We can see that as we increased the value of alpha, coefficients were approaching towards zero, but if you see in case of lasso, even at smaller alpha’s, our coefficients are reducing to absolute zeroes. Therefore, lasso selects the only some feature while reduces the coefficients of others to zero. This property is known as feature selection and which is absent in case of ridge.
+2. 
+"RIDGE"
+		  												ₙ			 				ₙ			 ₙ					 ₙ
+Loss Functiion = 	RSS (Residual sum of squares)	=	Σ (yᵢ - ŷᵢ)² + Penalty =	Σ (yᵢ - β0 - Σ ( βⱼXᵢⱼ) )²  +  λ Σ ( βⱼ)²
+								+   				   ᶦ⁼¹			 			   ᶦ⁼¹         ʲ⁼¹					ʲ⁼¹
+							 Penalty		   				   	Where,
+									   				   			λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
+
+"LASSO"
+		  												ₙ			 				ₙ			 ₙ					 ₙ
+Loss Functiion = 	RSS (Residual sum of squares)	=	Σ (yᵢ - ŷᵢ)² + Penalty =	Σ (yᵢ - β0 - Σ ( βⱼXᵢⱼ) )²  +  λ Σ | βⱼ|
+								+   				   ᶦ⁼¹			 			   ᶦ⁼¹         ʲ⁼¹					ʲ⁼¹
+							 Penalty		   				   	Where,
+									   				   			λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
+
+
+
+3. 
+Lasso is another variation, in which the above function is minimized. Its clear that this variation differs from ridge regression only in penalizing the high coefficients. It uses |βj|(modulus)instead of squares of βⱼ², as its penalty. In statistics, this is known as the L1 norm.
+4.
+The ridge regression can be thought of as solving an equation, where summation of squares of coefficients is less than or equal to s. And the Lasso can be thought of as an equation where summation of modulus of coefficients is less than or equal to s. Here, s is a constant that exists for each value of shrinkage factor λ. These equations are also referred to as constraint functions.
+
+5. CONTOURS REPRESENTATION
+Consider their are 2 parameters in a given problem. Then according to above formulation, the ridge regression is expressed by β1² + β2² ≤ s. This implies that ridge regression coefficients have the smallest RSS(loss function) for all points that lie within the circle given by β1² + β2² ≤ s.
+
+Similarly, for lasso, the equation becomes,|β1|+|β2|≤ s. This implies that lasso coefficients have the smallest RSS(loss function) for all points that lie within the diamond given by |β1|+|β2|≤ s.
+Since ridge regression has a circular constraint with no sharp points, this intersection will not generally occur on an axis, and so the ridge regression coeﬃcient estimates will be exclusively non-zero. However, the lasso constraint has corners at each of the axes, and so the ellipse will often intersect the constraint region at an axis. When this occurs, one of the coeﬃcients will equal zero. In higher dimensions(where parameters are much more than 2), many of the coeﬃcient estimates may equal zero simultaneously.
+
+6. This sheds light on the obvious disadvantage of ridge regression, which is model interpretability. It will shrink the coefficients for least important predictors, very close to zero. But it will never make them exactly zero. "IN OTHER WORDS, THE FINAL MODEL WILL INCLUDE ALL PREDICTORS." 
+	However, in the case of the lasso, the L1 penalty has the eﬀect of forcing some of the coeﬃcient estimates to be exactly equal to zero when the tuning parameter λ is suﬃciently large. Therefore, the lasso method also performs "VARIABLE SELECTION" and is said to yield sparse models.
+
+----------------------------------
+CODE
+----------------------------------
+from sklearn.linear_model import Lasso
+lassoReg = Lasso(alpha=10, normalize=True)
+lassoReg.fit(x_train,y_train)
+pred = lassoReg.predict(x_cv)
+
+
+
+
+
+

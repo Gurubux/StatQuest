@@ -1,0 +1,48 @@
+
+Elastic net is basically a combination of both L1 and L2 regularization. So if you know elastic net, you can implement both Ridge and Lasso by tuning the parameters. So it uses both L1 and L2 penality term, therefore its equation look like as follows:
+----------------------------------
+FORMULAE
+----------------------------------
+		  						ₙ			 				ₙ			 ₙ					 ₙ				ₙ
+Loss Functiion = 	RSS 	=	Σ (yᵢ - ŷᵢ)² + Penalty =	Σ (yᵢ - β0 - Σ ( βⱼXᵢⱼ) )²  +  λ Σ ( βⱼ)² +  	λ Σ | βⱼ|
+					+   		ᶦ⁼¹			 			   ᶦ⁼¹         ʲ⁼¹					ʲ⁼¹			   ʲ⁼¹
+					Penalty		   				   			Where,
+									   				   			λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
+
+----------------------------------
+CODE
+----------------------------------
+from sklearn.linear_model import ElasticNet
+
+ENreg = ElasticNet(alpha=1, l1_ratio=0.5, normalize=False)
+
+ENreg.fit(x_train,y_train)
+
+pred_cv = ENreg.predict(x_cv)
+
+
+
+
+ENreg = ElasticNet(alpha=1, l1_ratio=0.5, normalize=False)
+
+ENreg.fit(x_train,y_train)
+
+pred_cv = ENreg.predict(x_cv)
+
+#calculating mse
+
+mse = np.mean((pred_cv - y_cv)**2)
+
+print(mse )
+#1773750.73
+
+print(ENreg.score(x_cv,y_cv))
+
+#0.4504
+
+predictors = x_train.columns
+print(pred_cv)
+coef = Series(lassoReg.coef_,predictors).sort_values()
+print(coef)
+plt.figure(figsize=(15,9))
+coef.plot(kind='bar', title='Modal Coefficients')
