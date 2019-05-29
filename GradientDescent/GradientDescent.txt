@@ -1,0 +1,58 @@
+The gradient is a way of packing together all the partial derivative information of a function.
+
+Gradient Descent algorithm is an iterative optimization algorithm to find the minimum of a function, here that fucntion is the Loss function(RSS, MSE etc.)
+
+
+
+
+
+"https://machinelearningmastery.com/gradient-descent-for-machine-learning/"
+---------------------------------------------------
+GRADIENT DESCENT PROCEDURE
+---------------------------------------------------
+1. The procedure starts off with "INITIAL VALUES" for the coefficient or coefficients for the function. These could be 0.0 or a small random value.
+
+										coefficient = 0.0
+
+2. The "COST" of the coefficients is evaluated by plugging them into the function and calculating the cost.
+
+										cost = f(coefficient)
+
+										or
+
+										cost = evaluate(f(coefficient))
+
+3. The "DERIVATIVE OF THE COST" is calculated. The derivative is a concept from calculus and refers to the slope of the function at a given point. We need to know the slope so that we know the direction (sign) to move the coefficient values in order to get a lower cost on the next iteration.
+
+										delta Δ = derivative(cost)
+
+4. Now that we know from the derivative which direction is downhill, we can now "UPDATE THE COEFFICIENT VALUES." A LEARNING RATE PARAMETER (ALPHA α ) must be specified that controls how much the coefficients can change on each update.
+
+										coefficient = coefficient – (alpha * delta)
+										coefficient = coefficient – ( α * Δ )
+
+5. This process (2,3,4) is repeated until the cost of the coefficients (cost) is 0.0 or close enough to zero to be good enough.
+
+You can see how simple gradient descent is. It does require you to know the gradient of your cost function or the function you are optimizing, but besides that, it’s very straightforward. Next we will see how we can use this in machine learning algorithms.
+
+------------------------------------------------
+Summary
+1. GRADIENT DESCENT
+2. BATCH GRADIENT DESCENT
+3. STOCHASTIC GRADIENT DESCENT
+------------------------------------------------
+Optimization is a big part of machine learning.
+"Gradient descent" is a simple optimization procedure that you can use with many machine learning algorithms.
+"Batch gradient descent" refers to calculating the derivative from all training data before calculating an update.
+"Stochastic gradient descent" refers to calculating the derivative from each training data instance and calculating the update immediately.
+------------------------------------------------
+TIPS FOR GRADIENT DESCENT
+------------------------------------------------
+This section lists some tips and tricks for getting the most out of the gradient descent algorithm for machine learning.
+
+"Plot Cost versus Time:" Collect and plot the cost values calculated by the algorithm each iteration. The expectation for a well performing gradient descent run is a decrease in cost each iteration. If it does not decrease, try reducing your learning rate.
+"Learning Rate:" The learning rate value is a small real value such as 0.1, 0.001 or 0.0001. Try different values for your problem and see which works best.
+"Rescale Inputs: "The algorithm will reach the minimum cost faster if the shape of the cost function is not skewed and distorted. You can achieved this by rescaling all of the input variables (X) to the same range, such as [0, 1] or [-1, 1].
+"Few Passes:" Stochastic gradient descent often does not need more than 1-to-10 passes through the training dataset to converge on good or good enough coefficients.
+"Plot Mean Cost:" The updates for each training dataset instance can result in a noisy plot of cost over time when using stochastic gradient descent. Taking the average over 10, 100, or 1000 updates can give you a better idea of the learning trend for the algorithm.
+
