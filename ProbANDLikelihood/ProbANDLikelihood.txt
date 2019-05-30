@@ -1,0 +1,2 @@
+Calculate Maximum likelihood estimate for mean and std
+https://www.youtube.com/watch?v=Dn6b9fCIUpM

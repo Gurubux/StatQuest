@@ -56,3 +56,14 @@ This section lists some tips and tricks for getting the most out of the gradient
 "Few Passes:" Stochastic gradient descent often does not need more than 1-to-10 passes through the training dataset to converge on good or good enough coefficients.
 "Plot Mean Cost:" The updates for each training dataset instance can result in a noisy plot of cost over time when using stochastic gradient descent. Taking the average over 10, 100, or 1000 updates can give you a better idea of the learning trend for the algorithm.
 
+-----------------------------------------------------------------------------------------------------------
+https://medium.com/meta-design-ideas/linear-regression-by-using-gradient-descent-algorithm-your-first-step-towards-machine-learning-a9b9c0ec41b1
+
+https://towardsdatascience.com/linear-regression-using-gradient-descent-in-10-lines-of-code-642f995339c0
+
+https://towardsdatascience.com/gradient-descent-in-python-a0d07285742f
+
+https://towardsdatascience.com/linear-regression-using-gradient-descent-97a6c8700931
+https://www.youtube.com/watch?v=4PHI11lX11I
+
+https://scikit-learn.org/stable/modules/sgd.html
