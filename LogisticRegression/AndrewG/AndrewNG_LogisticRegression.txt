@@ -140,3 +140,9 @@ repeat until convergence:
 					  λ		    1   m 							
 		θⱼ:=  θⱼ(1- α---) -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ) 
 					  m		 	m  ᶦ⁼¹ 						
+
+
+
+"https://ml-cheatsheet.readthedocs.io/en/latest/logistic_regression.html#gradient-descent"
+https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression
+https://math.stackexchange.com/questions/78575/derivative-of-sigmoid-function-sigma-x-frac11e-x
