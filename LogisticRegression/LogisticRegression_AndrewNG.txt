@@ -1,0 +1,178 @@
+https://towardsdatascience.com/logistic-regression-detailed-overview-46c4da4303bc
+https://developers.google.com/machine-learning/crash-course/logistic-regression/video-lecture
+https://developers.google.com/machine-learning/crash-course/logistic-regression/calculating-a-probability
+https://scikit-learn.org/stable/auto_examples/linear_model/plot_logistic.html
+https://scikit-learn.org/stable/auto_examples/classification/plot_classification_probability.html
+https://scikit-learn.org/stable/auto_examples/linear_model/plot_iris_logistic.html
+--------------------------------------------------------------------------------------
+"https://christophm.github.io/interpretable-ml-book/logistic.html"
+--------------------------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------------------------
+https://stats.stackexchange.com/questions/22381/why-not-approach-classification-through-regression
+--------------------------------------------------------------------------------------
+Regression models predict a continuous variable, such as rainfall amount or sunlight intensity. They can also predict probabilities, such as the probability that an image contains a cat. A probability-predicting regression model can be used as part of a classifier by imposing a decision rule - for example, if the probability is 50% or more, decide it's a cat.
+
+Logistic regression predicts probabilities, and is therefore a regression algorithm. However, it is commonly described as a classification method in the machine learning literature, because it can be (and is often) used to make classifiers. There are also "true" classification algorithms, such as SVM, which only predict an outcome and do not provide a probability. We won`t discuss this kind of algorithm here.
+https://stats.stackexchange.com/questions/22381/why-not-approach-classification-through-regression
+
+A solution for classification is logistic regression. Instead of fitting a straight line or hyperplane, the logistic regression model uses the logistic function to squeeze the output of a linear equation between 0 and 1. 
+The logistic function is defined as:
+									1
+	logistic(η)				= ---------------
+							  	1 + exp(−η)
+
+							  		1
+							= ---------------
+							  	 1 + e⁻ⁿ
+
+
+The step from linear regression to logistic regression is kind of straightforward. In the linear regression model, we have modelled the relationship between outcome and features with a linear equation:
+					ŷ⁽ᶦ⁾=β₀ + β₁x₁⁽ᶦ⁾+…+βₚxₚ⁽ᶦ⁾
+₀₁ₚ
+For classification, we prefer probabilities between 0 and 1, so we wrap the right side of the equation into the logistic function. This forces the output to assume only values between 0 and 1.
+				 							1
+		P(y⁽ᶦ⁾=1) =			---------------------------------
+							1 + exp(−(β₀ + β₁x₁⁽ᶦ⁾+…+βₚxₚ⁽ᶦ⁾))
+
+
+-----------------------------------------------------------------------------------
+ANDREWG COURSERA - LOGISTIC REGRESSION
+https://www.coursera.org/learn/machine-learning/home/week/3
+HYPOTHESIS
+DECISION BOUNDARY
+COST FUNCTION
+GRADIENT DESCENT
+	GRADIENT DESCENT INTUITION
+	GRADIENT DESCENT FOR LOGISTIC REGRESSION
+REGULARIZATION
+	REGULARIZATION NORMAL EQUATION
+-----------------------------------------------------------------------------------
+HYPOTHESIS
+
+hθ(x)	=	g(θᵀx)
+z		=	θᵀx
+g(z)	=	 1
+		  --------
+		   1 + e−ᶻ
+
+hθ(x) will give us the probability that our output is 1.
+
+hθ(x)	=	P(y=1|x;θ)	=	1 − P(y=0|x;θ)
+1		=   P(y=0|x;θ)	+	P(y=1|x;θ)
+
+-----------------------------------------------------------------------------------
+DECISION BOUNDARY
+
+hθ(x) ≥ 0.5 → y=1
+hθ(x) < 0.5 → y=0
+
+g(z)  ≥ 0.5 
+	when z ≥ 0
+
+z = 0 , e⁰ = 1 ⇒ g(z) = 1/2
+z → ∞ , e−∞→ 0 ⇒ g(z) = 1
+z →−∞ , e∞ → ∞ ⇒ g(z)=0
+
+hθ(x) = g(θᵀx) ≥ 0.5
+	when θᵀx ≥ 0
+
+θᵀx ≥ 0 ⇒ y=1 
+θᵀx < 0 ⇒ y=0
+
+EXAMPLE:
+θ=⎡⎣5−10⎤⎦
+
+y=1 if 5 + (−1)x₁ + 0x₂ ≥ 0
+	  			 5 − x₁ ≥ 0
+	  			  	−x₁ ≥ −5
+	  			  	 x₁ ≤ 5
+In this case, our decision boundary is a straight vertical line placed on the graph where x₁ = 5, and everything to the left of that denotes y = 1, while everything to the right denotes y = 0.
+
+Again, the input to the sigmoid function g(z) (e.g. θᵀX ) doesn`t need to be linear, and could be a function that describes a circle.
+
+
+
+-----------------------------------------------------------------------------------
+COST FUNCTION
+
+						1    m               	  1    m
+	J(θ)     	=	   ----  ∑	(ŷᶦ - yᶦ)²	=	 ----  ∑	( hᶱ(xᶦ) - yᶦ )²
+			  		    2m  ᶦ⁼¹              	  2m  ᶦ⁼¹  
+
+Let 
+	      1
+   	     ----( hᶱ(xᶦ) - yᶦ )²     =   Cost( hᶱ(xᶦ),yᶦ )
+   	      2           	  
+
+Cost( hᶱ(x),y ) = −log( hᶱ(x) )  	if y = 1 
+Cost( hᶱ(x),y ) = −log( 1 − hᶱ(x) )	if y = 0
+
+
+Cost(hᶱ(x),y) = 0 if hᶱ(x) = y
+Cost(hᶱ(x),y) → ∞ if y=0 and hᶱ(x) → 1
+Cost(hᶱ(x),y) → ∞ if y=1 and hᶱ(x) → 0
+
+
+-----------------------------------------------------------------------------------
+SIMPLIFIED COST FUNCTION
+
+Cost(hᶱ(x),y) = −y log(hᶱ(x)) − (1−y) log(1−hᶱ(x))
+
+		 1    m  ⎡ 										 ⎤
+J(θ)= − ---   ∑  ⎢ yᶦ log(hᶱ(xᶦ)) + (1−yᶦ) log(1−hᶱ(xᶦ))  ⎢ 
+		 m   i=1 ⎣										 ⎦
+
+​A vectorized implementation is:
+	h 	= g(Xθ)
+  
+   			1
+   J(θ)	=  --- (−yᵀlog(h) − (1−y)ᵀlog(1−h) )
+  		    m
+
+-----------------------------------------------------------------------------------
+GRADIENT DESCENT
+repeat until convergence:
+					   ∂
+		θⱼ:=  θⱼ − α ----- J(θ₀,θ₁)
+					  ∂θⱼ
+			where,
+					ⱼ =₀,₁ represents the feature index number.
+
+
+						1   m
+		θⱼ:=  θⱼ  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xᶦ)
+						m  ᶦ⁼¹ 
+	
+
+A vectorized implementation is:
+				  α
+		θ := θ - ---  Xᵀ (g(Xθ) − y
+				  m
+
+
+
+-----------------------------------------------------------------------------------
+REGULARIZATION
+
+		 1    m  ⎡ 										 ⎤      λ    m
+J(θ)= − ---   ∑  ⎢ yᶦ log(hᶱ(xᶦ)) + (1−yᶦ) log(1−hᶱ(xᶦ))  ⎢  + ----  ∑   θⱼ²
+		 m   i=1 ⎣										 ⎦      2m  ⱼ=1
+
+
+repeat until convergence:
+{
+						1   m
+		θ₀:=  θ₀  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (x₀ᶦ)
+						m  ᶦ⁼¹ 
+
+
+						1   m 							   λ
+		θⱼ:=  θⱼ  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ)  +  --- θⱼ
+						m  ᶦ⁼¹    						   m
+
+
+}

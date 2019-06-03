@@ -1,0 +1,120 @@
+-----------------------------------------------------------------------------------
+ANDREWG COURSERA - LINEAR REGRESSION
+https://www.coursera.org/learn/machine-learning/home/week/3
+HYPOTHESIS
+COST FUNCTION
+GRADIENT DESCENT
+	GRADIENT DESCENT INTUITION
+	GRADIENT DESCENT FOR LINEAR REGRESSION
+REGULARIZATION
+	REGULARIZATION NORMAL EQUATION
+
+-----------------------------------------------------------------------------------
+HYPOTHESIS
+					hᶱ(x) = θ₀ + θ₁x
+
+-----------------------------------------------------------------------------------
+COST FUNCTION
+						1    m               	  1    m
+	J(θ₀,θ₁)     =	   ----  ∑	(ŷᵢ - yᵢ)²	=	 ----  ∑	( hᶱ(xᵢ) - yi )²
+			  		    2m  ᶦ⁼¹              	  2m  ᶦ⁼¹  
+
+
+-----------------------------------------------------------------------------------
+GRADIENT DESCENT 
+
+The gradient descent algorithm is:
+
+repeat until convergence:
+					   ∂
+		θⱼ:=  θⱼ − α ----- J(θ₀,θ₁)
+					  ∂θⱼ
+			where,
+					ⱼ =₀,₁ represents the feature index number.
+
+At each iteration j, one should simultaneously update the parameters θ₁,θ₂,θ₃.... θₙ
+Updating a specific parameter prior to calculating another one on the jᵗʰ iteration would yield to a wrong implementation.
+
+-----------------------------------------------------------------------------------
+GRADIENT DESCENT INTUITION
+1.
+Regardless of the slope`s sign for       d            
+	  									---  J(θ₁)
+	   									dθ₁		     , θ₁ eventually converges to its minimum value. 
+
+
+The following graph shows that when the slope is negative, the value of θ₁ increases and when it is positive, the value of θ₁decreases.
+
+---------------------------------
+2.
+How does gradient descent converge with a fixed step size "α" ?
+	The intuition behind the convergence is that 
+													d
+	  											   ---  J(θ₁)
+	   											   dθ₁
+​	approaches 0 as we approach the bottom of our convex function. At the minimum, the derivative will always be 0 and thus we get:
+
+	θ₁:= θ₁ − α ∗ 0
+
+
+-----------------------------------------------------------------------------------
+GRADIENT DESCENT FOR LINEAR REGRESSION
+
+We can substitute our actual cost function and our actual hypothesis function and modify the equation to :
+Repeat until convergence: 
+	
+	{					1   m
+		θ₀:=  θ₀  -  α ---  ∑	( hᶱ(xᵢ) - yi )
+						m  ᶦ⁼¹ 
+		
+						1   m
+		θ₁:=  θ₁  -  α ---  ∑	( hᶱ(xᵢ) - yi ) (xᵢ)
+						m  ᶦ⁼¹ 
+	}
+The point of all this is that if we start with a guess for our hypothesis and then repeatedly apply these gradient descent equations, our hypothesis will become more and more accurate.
+	
+
+-----------------------------------------------------------------------------------
+REGULARIZATION
+
+We will modify our gradient descent function to separate out θ₀ from the rest of the parameters bcz we do not want to penalize θ₀
+​	 .
+Repeat until convergence: 
+	
+	{					1   m
+		θ₀:=  θ₀  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ )
+						m  ᶦ⁼¹ 
+					   _                                               _
+					  |	  	 1   m 								λ       |
+		θⱼ:=  θⱼ  -  α|	 (	---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼ) )  +  --- θⱼ   |
+					  |_  	 m  ᶦ⁼¹ 							m      _|
+	}
+
+
+		Can also be written as :
+
+					 λ		    1    m 							
+		θⱼ:=  θⱼ - α--- θⱼ - α  ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼ) 
+					 m		 	 m  ᶦ⁼¹ 						
+
+					  λ		    1   m 							
+		θⱼ:=  θⱼ(1- α---) -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼ) 
+					  m		 	m  ᶦ⁼¹ 						
+
+-----------------------------------------------------------------------------------
+REGULARIZATION NORMAL EQUATION
+Now let`s approach regularization using the alternate method of the non-iterative normal equation.
+
+To add in regularization, the equation is the same as our original, except that we add another term inside the parentheses:
+
+		θ = (Xᵀ X + λ⋅L)−¹ Xᵀy
+		where  L=⎡0						  ⎤
+				 ⎢	1					  ⎢
+				 ⎢		1 				  ⎢
+				 ⎢			.  			  ⎢
+				 ⎢				.    	  ⎢
+				 ⎢					.     ⎢
+				 ⎣						1 ⎦
+L is a matrix with 0 at the top left and 1's down the diagonal, with 0's everywhere else. It should have dimension (n+1)×(n+1). Intuitively, this is the identity matrix (though we are not including x₀), multiplied with a single real number λ.
+
+Recall that if m < n, then Xᵀ X is non-invertible. However, when we add the term λ⋅L, then Xᵀ X + λ⋅L becomes invertible.
