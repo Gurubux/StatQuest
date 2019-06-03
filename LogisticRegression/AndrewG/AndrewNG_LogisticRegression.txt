@@ -1,0 +1,142 @@
+-----------------------------------------------------------------------------------
+ANDREWG COURSERA - LOGISTIC REGRESSION
+https://www.coursera.org/learn/machine-learning/home/week/3
+
+HYPOTHESIS
+DECISION BOUNDARY
+COST FUNCTION
+SIMPLIFIED COST FUNCTION
+GRADIENT DESCENT
+REGULARIZATION
+
+-----------------------------------------------------------------------------------
+HYPOTHESIS
+
+hθ(x)	=	g(θᵀx)
+z		=	θᵀx
+g(z)	=	 1
+		  --------
+		   1 + e−ᶻ
+
+hθ(x) will give us the probability that our output is 1.
+
+hθ(x)	=	P(y=1|x;θ)	=	1 − P(y=0|x;θ)
+1		=   P(y=0|x;θ)	+	P(y=1|x;θ)
+
+-----------------------------------------------------------------------------------
+DECISION BOUNDARY
+
+hθ(x) ≥ 0.5 → y=1
+hθ(x) < 0.5 → y=0
+
+g(z)  ≥ 0.5 
+	when z ≥ 0
+
+z = 0 , e⁰ = 1 ⇒ g(z) = 1/2
+z → ∞ , e−∞→ 0 ⇒ g(z) = 1
+z →−∞ , e∞ → ∞ ⇒ g(z)=0
+
+hθ(x) = g(θᵀx) ≥ 0.5
+	when θᵀx ≥ 0
+
+θᵀx ≥ 0 ⇒ y=1 
+θᵀx < 0 ⇒ y=0
+
+EXAMPLE:
+θ=⎡⎣5−10⎤⎦
+
+y=1 if 5 + (−1)x₁ + 0x₂ ≥ 0
+	  			 5 − x₁ ≥ 0
+	  			  	−x₁ ≥ −5
+	  			  	 x₁ ≤ 5
+In this case, our decision boundary is a straight vertical line placed on the graph where x₁ = 5, and everything to the left of that denotes y = 1, while everything to the right denotes y = 0.
+
+Again, the input to the sigmoid function g(z) (e.g. θᵀX ) doesn`t need to be linear, and could be a function that describes a circle.
+
+
+
+-----------------------------------------------------------------------------------
+COST FUNCTION
+
+						1    m               	  1    m
+	J(θ)     	=	   ----  ∑	(ŷᶦ - yᶦ)²	=	 ----  ∑	( hᶱ(xᶦ) - yᶦ )²
+			  		    2m  ᶦ⁼¹              	  2m  ᶦ⁼¹  
+
+Let 
+	      1
+   	     ----( hᶱ(xᶦ) - yᶦ )²     =   Cost( hᶱ(xᶦ),yᶦ )
+   	      2           	  
+
+Cost( hᶱ(x),y ) = −log( hᶱ(x) )  	if y = 1 
+Cost( hᶱ(x),y ) = −log( 1 − hᶱ(x) )	if y = 0
+
+
+Cost(hᶱ(x),y) = 0 if hᶱ(x) = y
+Cost(hᶱ(x),y) → ∞ if y=0 and hᶱ(x) → 1
+Cost(hᶱ(x),y) → ∞ if y=1 and hᶱ(x) → 0
+
+
+-----------------------------------------------------------------------------------
+SIMPLIFIED COST FUNCTION
+
+Cost(hᶱ(x),y) = −y log(hᶱ(x)) − (1−y) log(1−hᶱ(x))
+
+		 1    m  ⎡ 										 ⎤
+J(θ)= − ---   ∑  ⎢ yᶦ log(hᶱ(xᶦ)) + (1−yᶦ) log(1−hᶱ(xᶦ))  ⎢ 
+		 m   i=1 ⎣										 ⎦
+
+​A vectorized implementation is:
+	h 	= g(Xθ)
+  
+   			1
+   J(θ)	=  --- (−yᵀlog(h) − (1−y)ᵀlog(1−h) )
+  		    m
+
+-----------------------------------------------------------------------------------
+GRADIENT DESCENT
+repeat until convergence:
+					   ∂
+		θⱼ:=  θⱼ − α ----- J(θ₀,θ₁)
+					  ∂θⱼ
+			where,
+					ⱼ =₀,₁ represents the feature index number.
+
+
+						1   m
+		θⱼ:=  θⱼ  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xᶦ)
+						m  ᶦ⁼¹ 
+	
+
+A vectorized implementation is:
+				  α
+		θ := θ - ---  Xᵀ (g(Xθ) − y
+				  m
+
+
+
+-----------------------------------------------------------------------------------
+REGULARIZATION
+
+		 1    m  ⎡ 										 ⎤      λ    m
+J(θ)= − ---   ∑  ⎢ yᶦ log(hᶱ(xᶦ)) + (1−yᶦ) log(1−hᶱ(xᶦ))  ⎢  + ----  ∑   θⱼ²
+		 m   i=1 ⎣										 ⎦      2m  ⱼ=1
+
+
+repeat until convergence:
+{
+						1   m
+		θ₀:=  θ₀  -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (x₀ᶦ)
+						m  ᶦ⁼¹ 
+
+
+					   ⎡	  1   m 						   λ     ⎤
+		θⱼ:=  θⱼ  -  α ⎢ ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ)  +  --- θⱼ ⎢
+					   ⎣	  m  ᶦ⁼¹    					   m     ⎦
+
+
+}
+
+
+					  λ		    1   m 							
+		θⱼ:=  θⱼ(1- α---) -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ) 
+					  m		 	m  ᶦ⁼¹ 						

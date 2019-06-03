@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------------
 ANDREWG COURSERA - LINEAR REGRESSION
 https://www.coursera.org/learn/machine-learning/home/week/3
+
 HYPOTHESIS
 COST FUNCTION
 GRADIENT DESCENT
@@ -94,11 +95,11 @@ Repeat until convergence:
 		Can also be written as :
 
 					 λ		    1    m 							
-		θⱼ:=  θⱼ - α--- θⱼ - α  ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼ) 
+		θⱼ:=  θⱼ - α--- θⱼ - α  ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ) 
 					 m		 	 m  ᶦ⁼¹ 						
 
 					  λ		    1   m 							
-		θⱼ:=  θⱼ(1- α---) -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼ) 
+		θⱼ:=  θⱼ(1- α---) -  α ---  ∑	( hᶱ(xᶦ) - yᶦ ) (xⱼᶦ) 
 					  m		 	m  ᶦ⁼¹ 						
 
 -----------------------------------------------------------------------------------
