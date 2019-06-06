@@ -1,5 +1,7 @@
 https://www.dataquest.io/blog/learning-curves-machine-learning/
 ------------------------------------------------------------------------------------------------------
+Classification and Regression
+------------------------------------------------------------------------------------------------------
 In a nutshell, a learning curve shows how error changes as the training set size increases.
 As we increase the training set size, the model cannot fit perfectly anymore the training set. So the training error becomes larger. However, the model is trained on more data, so it manages to fit better the validation set. Thus, the validation error decreases.
 
@@ -51,7 +53,7 @@ Effect Of Training Data Increase On Errors 2 - https://raw.githubusercontent.com
 Ideal Learning Curve [Irreducible Error]- https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Ideal_Learning_Curve.png
 
 
-Code:https://github.com/Gurubux/Data-Lit/blob/master/2-StatisticsAndProbability/2.1-CreditScoring/Loan_Default_Prediction.ipynb
+Code:"https://github.com/Gurubux/Data-Lit/blob/master/2-StatisticsAndProbability/2.1-CreditScoring/Loan_Default_Prediction.ipynb"
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.model_selection import learning_curve
@@ -107,7 +109,7 @@ plt = plot_learning_curve(estimator, title, X, y, ylim=(0.75, 0.90), cv=cv, n_jo
 plt.show()
 
 
-
+-----------------------------------------------------------------------------
 
 https://www.dataquest.io/blog/learning-curves-machine-learning/
 ### Bundling our previous work into a function ###
@@ -132,3 +134,13 @@ def plot_learning_curve_2(estimator, data, features, target, train_sizes, cv):
 	plt.subplot(1,2,i)
 
 plot_learning_curve_2(model, electricity, features, target, train_sizes, 5)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+"https://github.com/Gurubux/StatQuest/blob/master/LearningCurve/Classification_Cars_LR_SVC_RF_LearCurv_ROC_ConfMatr.ipynb"
+
+
+-----------------------------------------------------------------------------------------------------------------------
+"https://github.com/Gurubux/StatQuest/blob/master/LearningCurve/LearningCurve.ipynb"
+"https://scikit-learn.org/stable/auto_examples/model_selection/#plot_learning_curve.html#sphx-glr-auto-examples-model-selection-plot-learning-curve-py"
