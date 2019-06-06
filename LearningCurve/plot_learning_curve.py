@@ -1,13 +1,19 @@
-# -*- coding: utf-8 -*-
 """
-Created on Tue May 21 16:24:12 2019
+========================
+Plotting Learning Curves
+========================
 
-@author: Guru
-
-https://www.dataquest.io/blog/learning-curves-machine-learning/
+On the left side the learning curve of a naive Bayes classifier is shown for
+the digits dataset. Note that the training score and the cross-validation score
+are both not very good at the end. However, the shape of the curve can be found
+in more complex datasets very often: the training score is very high at the
+beginning and decreases and the cross-validation score is very low at the
+beginning and increases. On the right side we see the learning curve of an SVM
+with RBF kernel. We can see clearly that the training score is still around
+the maximum and the validation score could be increased with more training
+samples.
 """
-
-#print(__doc__)
+print(__doc__)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,7 +22,7 @@ from sklearn.svm import SVC
 from sklearn.datasets import load_digits
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import ShuffleSplit
-from sklearn import  linear_model 
+
 
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
                         n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
@@ -45,7 +51,7 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
     cv : int, cross-validation generator or an iterable, optional
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
-          - None, to use the default 3-fold cross-validation,
+          - None, to use the default 5-fold cross-validation,
           - integer, to specify the number of folds.
           - :term:`CV splitter`,
           - An iterable yielding (train, test) splits as arrays of indices.
@@ -98,7 +104,7 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
              label="Cross-validation score")
 
     plt.legend(loc="best")
-    plt.show()
+    return plt
 
 
 digits = load_digits()
@@ -113,13 +119,10 @@ cv = ShuffleSplit(n_splits=100, test_size=0.2, random_state=0)
 estimator = GaussianNB()
 plot_learning_curve(estimator, title, X, y, ylim=(0.7, 1.01), cv=cv, n_jobs=4)
 
-"""
 title = r"Learning Curves (SVM, RBF kernel, $\gamma=0.001$)"
 # SVC is more expensive so we do a lower number of CV iterations:
 cv = ShuffleSplit(n_splits=10, test_size=0.2, random_state=0)
 estimator = SVC(gamma=0.001)
 plot_learning_curve(estimator, title, X, y, (0.7, 1.01), cv=cv, n_jobs=4)
-"""
-cv = ShuffleSplit(n_splits=100, test_size=0.2, random_state=0)
-estimator = linear_model.LogisticRegression()
-#plot_learning_curve(estimator, title, X, y, ylim=(0.75, 0.90), cv=cv, n_jobs=4)
+
+plt.show()
