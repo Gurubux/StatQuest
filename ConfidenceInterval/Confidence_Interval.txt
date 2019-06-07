@@ -1,0 +1,208 @@
+-----------------------------------------------------------------------
+CONFIDENCE INTERVALS
+-----------------------------------------------------------------------
+"https://www.datasciencecentral.com/profiles/blogs/confidence-intervals-in-one-picture"
+-----------------------------------------------------------------------
+___________________________________________________________________________________________________________________
+________________________CONFIDENCE INTERVAL - z-critical value - point estimate MEAN_________________________________
+"If you KNOW THE STANDARD DEVIATION OF THE POPULATION, the margin of error is equal to:"
+							 ________________
+	 						/	 	  σ		/
+MARGIN OF ERROR 	 =     /	z ∗ -----  /
+    					  /__________√n___/		 
+							where,
+									σ (sigma) is the population standard deviation, ddof = 0, 
+									n is sample size, and 
+									z is a number known as the z-critical value, stats.norm.ppf(q = 0.975)
+
+CONFIDENCE INTERVAL  = [ SAMPLE_MEAN  +  MARGIN OF ERROR , SAMPLE_MEAN -  MARGIN OF ERROR ]
+
+
+The z-critical value is the number of standard deviations you`d have to go from the mean of the normal distribution to capture the proportion 
+of the data associated with the desired confidence level. For instance, we know that roughly 95% of the data in a normal distribution lies
+within 2 standard deviations of the mean, so we could use 2 as the z-critical value for a 95% confidence interval 
+(although it is more exact to get z-critical values with stats.norm.ppf().).
+
+print("MARGIN OF ERROR", stats.norm.ppf(q=0.025) ) # Find the quantile for the 2.5% cutoff # -1.95996398454 # ~ -2
+print("MARGIN OF ERROR", stats.norm.ppf(q=0.975) ) # Find the quantile for the 97.5% cutoff # 1.95996398454 # ~  2
+
+
+Let`s calculate a 95% confidence for our mean point estimate:
+np.random.seed(10)
+
+sample_size = 1000 # n
+sample = np.random.choice(a= population_ages, size = sample_size)
+sample_mean = sample.mean() # 42.523
+
+z_critical = stats.norm.ppf(q = 0.975)  # Get the z-critical value* # z # 1.95996398454                     
+pop_stdev = population_ages.std()  # Get the population standard deviation # σ
+margin_of_error = z_critical * (pop_stdev/math.sqrt(sample_size)) #
+confidence_interval = (sample_mean - margin_of_error,
+                       sample_mean + margin_of_error)  
+print(confidence_interval) #(41.703064068826833, 43.342935931173173)
+
+
+# Let's create several confidence intervals and plot them to get a better sense of what it means to "capture" the true mean:
+np.random.seed(12)
+sample_size = 1000
+intervals = []
+sample_means = []
+
+for sample in range(25):
+    sample = np.random.choice(a= population_ages, size = sample_size)
+    sample_mean = sample.mean()
+    sample_means.append(sample_mean)
+    z_critical = stats.norm.ppf(q = 0.975)  # Get the z-critical value*         
+    pop_stdev = population_ages.std()  # Get the population standard deviation
+    stats.norm.ppf(q = 0.025)
+    margin_of_error = z_critical * (pop_stdev/math.sqrt(sample_size))
+    confidence_interval = (sample_mean - margin_of_error,
+                           sample_mean + margin_of_error)  
+    intervals.append(confidence_interval)
+>>>intervals
+[(42.43806406882683, 44.07793593117317),
+ (42.35506406882683, 43.99493593117317),
+ (42.69006406882683, 44.32993593117317),
+ (42.12106406882683, 43.76093593117317),
+ ..., ...
+ (42.09006406882683, 43.729935931173166),
+ (43.40106406882683, 45.040935931173166),
+ (41.96106406882683, 43.60093593117317),
+ (42.43006406882683, 44.06993593117317)] 
+
+
+
+# Plotting multiple Confidence interval based in comparision the true population mean = 43.0023
+plt.figure(figsize=(15,9))
+
+#Similar to confidence interval but Vertical line instead of Shade
+"""plt.errorbar(x=np.arange(0.1, 50, 1), 
+             y=sample_means, 
+             yerr=[(top-bot)/2 for top,bot in intervals],
+             fmt='o')"""
+#Sample Means Line and points for 50 samples
+plt.plot(np.arange(0.1, 50, 1),np.array([bot+(top-bot)/2 for top,bot in intervals]))
+plt.scatter(np.arange(0.1, 50, 1),np.array([bot+(top-bot)/2 for top,bot in intervals]))
+
+#Population Mean Line # 43.0023
+plt.hlines(xmin=0, xmax=50,
+           y=43.0023, 
+           linewidth=2.0,
+           color="red")
+#Confidence Interval plot for confidence 95 or quantile 0.975
+plt.fill_between(np.arange(0.1, 50, 1), [bot for top,bot in intervals],
+                     [top for top,bot in intervals], alpha=0.1,
+                     color="r")
+___________________________________________________________________________________________________________________
+________________________CONFIDENCE INTERVAL - t-critical value - point estimate MEAN_______________________________
+
+"If you DON'T KNOW THE STANDARD DEVIATION OF THE POPULATION, the margin of error is equal to:"
+							 __________________
+	 						/	 	  σ		  /
+MARGIN OF ERROR 	 =     /	t ∗ -----    /
+    					  /__________√n_____/		 
+							where,
+									σ (sigma) is the Sample standard deviation, ddof = 1, 
+									n is sample size, and 
+									z is a number known as the t-critical value, stats.t.ppf(q = 0.975, df=n-1)
+
+CONFIDENCE INTERVAL  = [ SAMPLE_MEAN  +  MARGIN OF ERROR , SAMPLE_MEAN -  MARGIN OF ERROR ]
+	You have to use the standard deviation of your sample as a stand in when creating confidence intervals. 
+Since the sample standard deviation may not match the population parameter the interval will have more error 
+when you don`t know the population standard deviation. To account for this error, we use what's known as  
+
+'T-CRITICAL VALUE' instead of the Z-CRITICAL value. 
+The t-critical value is drawn from what`s known as a " t-distribution " --a distribution that closely resembles the normal distribution 
+but that gets wider and wider as the sample size falls. 
+
+The t-distribution is available in scipy.stats with the nickname "t" so we can get t-critical values with stats.t.ppf() instead of stats.norm.ppf().
+------------------------------------
+------------------------------------
+Let`s take a new, SMALLER SAMPLE and then create a confidence interval without the population standard deviation, using the t-distribution:
+
+np.random.seed(10)
+sample_size = 25
+sample = np.random.choice(a= population_ages, size = sample_size)
+sample_mean = sample.mean()
+
+t_critical = stats.t.ppf(q = 0.975, df=24)  # Get the t-critical value* 
+#*Note: when using the t-distribution, you have to supply the degrees of freedom (df) UNLIKE stats.norm.ppf(q = 0.975)
+
+print("t-critical value:")                  # Check the t-critical value
+print(t_critical)                        
+
+sample_stdev = sample.std(ddof=1)    # Get the sample standard deviation UNLIKE population_ages.std() where ddof=0
+# In standard statistical practice, 
+# 	ddof=1 provides an unbiased estimator of the variance of a hypothetical infinite population. 
+# 	ddof=0 provides a maximum likelihood estimate of the variance for normally distributed variables.
+# For sample the Std is TSS/√(n-1) instead of TSS/n And since in the Scipy formulae 
+# 	the divisor used in calculations is N - ddof, where N represents the number of elements, and ddof is default 0 so passing 1 is mandatory
+sigma = sample_stdev/math.sqrt(sample_size)  # Standard deviation estimate
+margin_of_error = t_critical * sigma
+
+confidence_interval = (sample_mean - margin_of_error,
+                       sample_mean + margin_of_error)  
+
+print("Confidence interval:")
+print(confidence_interval)
+>>>
+t-critical value:
+2.06389856163 # larger than z-critical value = 1.95996398454 
+Confidence interval:
+(37.757112737010608, 48.002887262989397)  
+# The end result is a much wider confidence interval (an interval with a larger margin of error.)
+# instead of (41.703064068826833, 43.342935931173173)
+"Notice that the t-critical value is larger than the z-critical value we used for 95% confidence interval.
+"This allows the confidence interval to CAST A LARGER NET TO MAKE UP FOR THE VARIABILITY caused by using the 
+"sample standard deviation in place of the population standard deviation."
+
+------------------------------------
+------------------------------------
+"If you have a large sample( > 25 ), the t-critical value will approach the z-critical value so there is 
+"little difference between using the normal distribution vs. the t-distribution:"
+
+# Check the difference between critical values with a sample size of 25 and 1000 for  t-critical and z-critical respectively
+print(stats.t.ppf(q=0.975, df= 24) - stats.norm.ppf(0.975)  )
+0.1039345770879665
+# Check the difference between critical values with a sample size of 1000             
+print(stats.t.ppf(q=0.975, df= 999) - stats.norm.ppf(0.975)  )
+0.0023774765933946007
+
+------------------------------------
+------------------------------------
+calculating a confidence interval using the Python function stats.t.interval():
+
+stats.t.interval(alpha = 0.95,              # Confidence level
+                 df= 24,                    # Degrees of freedom
+                 loc = sample_mean,         # Sample mean
+                 scale = sigma)             # Standard deviation estimate
+(37.757112737010608, 48.002887262989397)  
+
+_________________________________________________________________________________________________________________________
+________________________CONFIDENCE INTERVAL - z-critical value - point estimate PROPORTION_______________________________
+							 ___________________
+	 						/	 		p(1−p) /
+MARGIN OF ERROR 	 =     /	z ∗	√   ----- /
+    					  /_______________n__/		 
+							where,
+									p the point estimate of the population proportion ,
+									n is sample size, and 
+									z is the z-critical value, stats.t.ppf(q = 0.975, df=24)
+
+CONFIDENCE INTERVAL  = [ p  +  MARGIN OF ERROR , p -  MARGIN OF ERROR ]
+
+z_critical = stats.norm.ppf(0.975)      # Record z-critical value
+p = 0.192                               # Point estimate of proportion
+n = 1000                                # Sample size
+margin_of_error = z_critical * math.sqrt((p*(1-p))/n)
+confidence_interval = (p - margin_of_error,  # Calculate the the interval
+                       p + margin_of_error) 
+
+(0.16758794241348748, 0.21641205758651252)
+
+Calculate a confidence interval for a population proportion using the Python function tats.norm.interval()
+stats.norm.interval(alpha = 0.95,    # Confidence level             
+                   loc =  0.192,     # Point estimate of proportion
+                   scale = math.sqrt((p*(1-p))/n))  # Scaling factor
+(0.16758794241348748, 0.21641205758651252)
+
