@@ -8,13 +8,13 @@ As we increase the training set size, the model cannot fit perfectly anymore the
 ------------------------------------------------------------------------------------------------------
 
 High Bias Learning Curve - 
-	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Bias_LC.png
-	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/HighBias_LC.PNG
+	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/Bias_LC.png
+	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/HighBias_LC.PNG
 	Because the validation MSE is high, and the training MSE is high as well, our model has a high bias problem.
 
 High Variance Learning Curve - 
-	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Variance_LC.png
-	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/HighVariance_LC.PNG
+	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/Variance_LC.png
+	https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/HighVariance_LC.PNG
 	A narrow gap indicates low variance. 
 ------------------------------------------------------------------------------------------------------
 I.
@@ -26,7 +26,7 @@ SOLUTIONS:
 		2. Adding Features to train model.(If no more data feature can be collected use Polynomial features(High degree))
 		3. Decreasing the regularization of the current learning algorithm, if that’s the case. In a nutshell, regularization prevents the 		algorithm from fitting the training data too well. If we decrease regularization, the model will fit training data better, and, 	as a consequence, the variance will increase and the bias will decrease.
 EXAMPLE : 
-		LINEAR REGRESSION - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_LinRegress-HighBias_LowVariance_Underfits.PNG
+		LINEAR REGRESSION - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/LC_LinRegress-HighBias_LowVariance_Underfits.PNG
 
 ------------------------------------------------------------------------------------------------------
 II.
@@ -39,18 +39,18 @@ SOLUTIONS:
 		3. Increase the regularization for our current learning algorithm. This should decrease the variance and increase the bias. Adjust 		the maximum number of leaf nodes in each decision tree. RandomForestRegressor(max_leaf_nodes = 350)
 EXAMPLE : 
 		RANDOM FOREST - 
-		Problem  - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_RandForest-LowBias_HighVariance_Overfits.png
-		Improved - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LC_RandForest-LowBias_HighVariance_Overfits_improved.png 
+		Problem  - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/LC_RandForest-LowBias_HighVariance_Overfits.png
+		Improved - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/LC_RandForest-LowBias_HighVariance_Overfits_improved.png 
 Further Solutions: 
 	Feature selection.
 	Hyperparameter optimization.
 ------------------------------------------------------------------------------------------------------
-Effect Of Training Data Increase On Errors - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors.png
+Effect Of Training Data Increase On Errors - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/EffectOfTrainingDataIncreaseOnErrors.png
 
 
-Effect Of Training Data Increase On Errors 2 - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/EffectOfTrainingDataIncreaseOnErrors_2.png
+Effect Of Training Data Increase On Errors 2 - https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/EffectOfTrainingDataIncreaseOnErrors_2.png
 ------------------------------------------------------------------------------------------------------
-Ideal Learning Curve [Irreducible Error]- https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/Ideal_Learning_Curve.png
+Ideal Learning Curve [Irreducible Error]- https://raw.githubusercontent.com/Gurubux/StatQuest/master/LearningCurve/LearningCurve_Images/Ideal_Learning_Curve.png
 
 
 Code:"https://github.com/Gurubux/Data-Lit/blob/master/2-StatisticsAndProbability/2.1-CreditScoring/Loan_Default_Prediction.ipynb"
@@ -139,8 +139,5 @@ plot_learning_curve_2(model, electricity, features, target, train_sizes, 5)
 
 -----------------------------------------------------------------------------------------------------------------------
 "https://github.com/Gurubux/StatQuest/blob/master/LearningCurve/Classification_Cars_LR_SVC_RF_LearCurv_ROC_ConfMatr.ipynb"
-
-
------------------------------------------------------------------------------------------------------------------------
 "https://github.com/Gurubux/StatQuest/blob/master/LearningCurve/LearningCurve.ipynb"
-"https://scikit-learn.org/stable/auto_examples/model_selection/#plot_learning_curve.html#sphx-glr-auto-examples-model-selection-plot-learning-curve-py"
+"https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html"
