@@ -6,10 +6,11 @@ CONFIDENCE INTERVALS
 ___________________________________________________________________________________________________________________
 ________________________CONFIDENCE INTERVAL - z-critical value - point estimate MEAN_________________________________
 "If you KNOW THE STANDARD DEVIATION OF THE POPULATION, the margin of error is equal to:"
-							 ________________
-	 						/	 	  σ		/
-MARGIN OF ERROR 	 =     /	z ∗ -----  /
-    					  /__________√n___/		 
+MARGIN OF ERROR    =	
+   _______________
+  /	 	    σ		   /
+ /	z ∗ -----   /
+/________√n____/		 
 							where,
 									σ (sigma) is the population standard deviation, ddof = 0, 
 									n is sample size, and 
@@ -97,10 +98,11 @@ ________________________________________________________________________________
 ________________________CONFIDENCE INTERVAL - t-critical value - point estimate MEAN_______________________________
 
 "If you DON'T KNOW THE STANDARD DEVIATION OF THE POPULATION, the margin of error is equal to:"
-							 __________________
-	 						/	 	  σ		  /
-MARGIN OF ERROR 	 =     /	t ∗ -----    /
-    					  /__________√n_____/		 
+MARGIN OF ERROR    = 
+   __________________
+  /	 	     σ		    /
+ /	t ∗   -----    /
+/__________√n_____/		 
 							where,
 									σ (sigma) is the Sample standard deviation, ddof = 1, 
 									n is sample size, and 
@@ -180,10 +182,11 @@ stats.t.interval(alpha = 0.95,              # Confidence level
 
 _________________________________________________________________________________________________________________________
 ________________________CONFIDENCE INTERVAL - z-critical value - point estimate PROPORTION_______________________________
-							 ___________________
-	 						/	 		p(1−p) /
-MARGIN OF ERROR 	 =     /	z ∗	√   ----- /
-    					  /_______________n__/		 
+MARGIN OF ERROR    =     	
+  	___________________
+	 /	 		  p(1−p)    /
+  /	z ∗	√   -----    /
+ /___________n______/		 
 							where,
 									p the point estimate of the population proportion ,
 									n is sample size, and 
