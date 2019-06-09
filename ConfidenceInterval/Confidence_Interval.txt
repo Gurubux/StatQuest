@@ -3,6 +3,10 @@ CONFIDENCE INTERVALS
 -----------------------------------------------------------------------
 "https://www.datasciencecentral.com/profiles/blogs/confidence-intervals-in-one-picture"
 -----------------------------------------------------------------------
+"http://www.stats.gla.ac.uk/steps/glossary/confidence_intervals.html#conflim"
+-----------------------------------------------------------------------
+
+"https://github.com/Gurubux/StatQuest/blob/master/ConfidenceInterval/InferentialAnalysis_PointEstimates_ConfidenceIntervals.ipynb"
 ___________________________________________________________________________________________________________________
 ________________________CONFIDENCE INTERVAL - z-critical value - point estimate MEAN_________________________________
 "If you KNOW THE STANDARD DEVIATION OF THE POPULATION, the margin of error is equal to:"
@@ -209,3 +213,93 @@ stats.norm.interval(alpha = 0.95,    # Confidence level
                    scale = math.sqrt((p*(1-p))/n))  # Scaling factor
 (0.16758794241348748, 0.21641205758651252)
 
+---------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+https://github.com/Gurubux/StatQuest/blob/master/ConfidenceInterval/AnalysisOfVariance_ANOVA.ipynb
+https://github.com/Gurubux/StatQuest/blob/master/ConfidenceInterval/CHI_SQUARED_TESTS.ipynb
+https://github.com/Gurubux/StatQuest/blob/master/ConfidenceInterval/ConfidenceInterval.ipynb
+https://github.com/Gurubux/StatQuest/blob/master/ConfidenceInterval/HypothesisTestingAndTheT_Test_ConfidenceInterval.ipynb
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+8.9 #Draw Confidence level for Normal Curve, Z-Score -  CDF PDF PPF
+draw_z_score(x, x<z0, 0, 1, 'z<-0.75')
+sample_means = normal_curve_confidence_shade(population_ages,minnesota_ages,100)
+#https://github.com/Gurubux/ML-Analysis-Steps/blob/master/InferentialStatistics/HypothesisTestingAndTheT-Test/HypothesisTestingAndTheT-Test.txt 
+#https://github.com/Gurubux/ML-Analysis-Steps/blob/master/InferentialStatistics/HypothesisTestingAndTheT-Test/HypothesisTestingAndTheT_Test_ConfidenceInterval.ipynb
+
+def normal_curve_confidence_shade(population_data,sample_data,sample_size):
+  import numpy as np
+  from sklearn.preprocessing import normalize
+  np.random.seed(10)
+  
+  sample_means = []         # Make empty list to hold point estimates
+  for x in range(200):         # Generate 200 samples
+    sample = np.random.choice(a= sample_data, size=sample_size)
+    sample_means.append( sample.mean() )
+  
+  fig=plt.figure(figsize=(15,9))
+  
+  plt.vlines(ymin=0, ymax=0.5,
+           x=population_data.mean(), 
+           linewidth=1.0,
+           color="black",label=str('Population Mean %.2f'%population_data.mean()))
+  
+  plt.vlines(ymin=0, ymax=0.5,
+           x=np.mean(sample_means), 
+           linewidth=1.0,
+           color="red",label=str('Sample Means Mean %.2f'%np.mean(sample_means)))
+  
+  plt.style.use('ggplot')
+  mean=np.mean(sample_means)
+  std=np.std(sample_means)
+  
+  x=np.arange(mean-6*std, mean+6*std,0.01)
+  iq=stats.norm(mean,std)
+  #plotting the normal curve
+  plt.plot(x,stats.norm.pdf(x,mean,std),'black')
+  intervals = stats.t.interval(alpha = 0.975,  # Confidence level
+                 df = sample_size-1,                     # Degrees of freedom
+                 loc = mean,                  # Sample mean
+                 scale= sigma)
+  px=np.arange(intervals[0],intervals[1],0.01)
+  #plotting the normal curve
+  plt.fill_between(px,iq.pdf(px),color='#1f77b4',label=str('97.5% Confidence {d[0]:.3f} to {d[1]:.3f}'.format(d=intervals)))
+  
+  intervals = stats.t.interval(alpha = 0.95,  # Confidence level
+                 df = sample_size-1,                     # Degrees of freedom
+                 loc = mean,                  # Sample mean
+                 scale= sigma)
+  px=np.arange(intervals[0],intervals[1],0.01)
+  #plotting the normal curve
+  plt.fill_between(px,stats.norm.pdf(px),color='#0a5386',label=str('95% Confidence {d[0]:.3f} to {d[1]:.3f}'.format(d=intervals)))
+  
+  intervals = stats.t.interval(alpha = 0.68,  # Confidence level
+                 df = sample_size-1,                     # Degrees of freedom
+                 loc = mean,                  # Sample mean
+                 scale= sigma)
+  px=np.arange(intervals[0],intervals[1],0.01)
+  #Filling the 68% Confidence - 1 Z-critical
+  plt.fill_between(px,iq.pdf(px),color='#173f5f',label=str('68% Confidence {d[0]:.3f} to {d[1]:.3f}'.format(d=intervals)))
+  plt.legend()
+  return sample_means
+sample_means = normal_curve_confidence_shade(population_ages,minnesota_ages,100)  
+
+def draw_z_score(x, cond, mu, sigma, title):
+    y = stats.norm.pdf(x, mu, sigma)
+    z = x[cond]
+    plt.plot(x, y)
+    #print(x,y,z)
+    plt.fill_between(z, 0, stats.norm.pdf(z, mu, sigma))
+    plt.title(title)
+    plt.show()
+
+x=np.arange(np.mean(sample_means)-6*np.std(sample_means), np.mean(sample_means)+6*np.std(sample_means),0.001)
+intervals = stats.t.interval(alpha = 0.68,  # Confidence level
+                 df = 100-1,                     # Degrees of freedom
+                 loc = np.mean(sample_means),                  # Sample mean
+                 scale= sigma)
+z0,z1 = intervals
+draw_z_score(x, (z0 < x) & (x < z1),np.mean(sample_means), np.std(sample_means), '-0.75<z<0.75')
