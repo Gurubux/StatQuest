@@ -6,7 +6,7 @@ https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a
 4. How RR can solve the unsolvable.
 
 1. Example that shows main ideas behind Ridge Regression
-	It is to find a New Line that does'nt fit the Training data as well as normal LeastSquare equation does(to avoid Overfitting). In other words we introduce(or increase) small amount of bias into how the new Line fits the data :-( . And in return we get a significant drop in Variance  :-) . That means, by starting with slighly worse fit, RR can provide better long term predictions.
+	It is to find a New Line that does`nt fit the Training data as well as normal LeastSquare equation does(to avoid Overfitting). In other words we introduce(or increase) small amount of bias into how the new Line fits the data :-( . And in return we get a significant drop in Variance  :-) . That means, by starting with slighly worse fit, RR can provide better long term predictions.
 	
 2. Go into details about how ridge regression works	
 	"RR Penalty is the λ times sum of all squared paramaters, except the y-intercept"
@@ -44,7 +44,7 @@ https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a
 	- LOGISTICE REGRESSION
 		_________________________________________________
 	   /						 	 					/
-	  /	y =  Sum Of Likelihood + λ m²   /
+	  /	y =  Sum Of Likelihood + λ m²   			   /
 	 /________________________________________________/ 
 	 	
 
