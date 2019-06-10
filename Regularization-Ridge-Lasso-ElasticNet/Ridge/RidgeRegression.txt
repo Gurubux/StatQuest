@@ -77,7 +77,7 @@ Loss Functiion = 	RSS (Residual sum of squares)	=	Σ (yᵢ - ŷᵢ)² + Penalty 
 
 Above formulae shows ridge regression, where the RSS is modified by adding the shrinkage quantity. Now, the coefficients are estimated by minimizing this function. Here, λ is the tuning parameter that decides how much we want to penalize the flexibility of our model.
 
-When λ = 0, the penalty term has no eﬀect, and the estimates produced by ridge regression will be equal to least squares. However, "AS Λ→∞, THE IMPACT OF THE SHRINKAGE PENALTY GROWS", and the ridge regression coeﬃcient estimates will "approach zero. "	
+When λ = 0, the penalty term has no eﬀect, and the estimates produced by ridge regression will be equal to least squares. However, "AS λ→∞, THE IMPACT OF THE SHRINKAGE PENALTY GROWS", and the ridge regression coeﬃcient estimates will "approach zero. "	
 
 As can be seen, selecting a good value of λ is critical. "CROSS VALIDATION" comes in handy for this purpose. The coefficient estimates produced by this method are also known as the L2 norm.
 
@@ -96,3 +96,6 @@ ridgeReg = Ridge(alpha=100, normalize=True)
 ridgeReg.fit(x_train,y_train)
 pred = ridgeReg.predict(x_cv)
 ridgeReg.score(y_test,pred)
+
+
+-----------------------------------------------------------------------------------------------------

@@ -2,3 +2,6 @@ REGULARIZATION is a form of regression, that constrains/ regularizes or shrinks 
 
 What does Regularization achieve?
 A standard least squares model tends to have some variance in it, i.e. this model won’t generalize well for a data set different than its training data. Regularization, significantly reduces the variance of the model, without substantial increase in its bias. So the tuning parameter λ, used in the regularization techniques described above, controls the impact on bias and variance. As the value of λ rises, it reduces the value of coefficients and thus reducing the variance. Till a point, this increase in λ is beneficial as it is only reducing the variance(hence avoiding overfitting), without loosing any important properties in the data. But after certain value, the model starts loosing important properties, giving rise to bias in the model and thus underfitting. Therefore, the value of λ should be carefully selected.
+------------------------------------------------------------------------------------------
+https://github.com/Gurubux/StatQuest/blob/master/Regularization-Ridge-Lasso-ElasticNet/Ridge_Lasso_Elastic_net.ipynb
+https://github.com/Gurubux/StatQuest/blob/master/Regularization-Ridge-Lasso-ElasticNet/LassoAndRidgeRegression_data-lit.ipynb
