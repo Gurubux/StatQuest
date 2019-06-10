@@ -67,3 +67,8 @@ https://towardsdatascience.com/linear-regression-using-gradient-descent-97a6c870
 https://www.youtube.com/watch?v=4PHI11lX11I
 
 https://scikit-learn.org/stable/modules/sgd.html
+
+-----------------------------------------------------------------------------------------------------------
+"https://github.com/Gurubux/StatQuest/blob/master/GradientDescent/GradientDescent_AndrewNG_SGD_3DPlot_contour.ipynb"
+"https://github.com/Gurubux/StatQuest/blob/master/GradientDescent/GradientDescent_Stochastic_MiniBatch_DETAIL.ipynb"
+"https://github.com/Gurubux/StatQuest/blob/master/GradientDescent/LinearRegressionUsingGradientDescent_And_SGDRegressor.ipynb"
