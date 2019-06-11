@@ -11,3 +11,6 @@ LinearRegression</br>
 Multiple Linear Regression</br>
 LogisticRegression</br>
 GridSearchCV_RandomizedSearchCV</br>
+</br>
+PS : 
+To Open .ipynb files (If unable to view on github) copy link of file.ipynb and paste it on the web site https://nbviewer.jupyter.org/
