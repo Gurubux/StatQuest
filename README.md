@@ -1,5 +1,5 @@
 # StatQuest
- StatQuest with Josh Starmer
+ StatQuest with Josh Starmer</br>
 ConfidenceInterval</br>
 Calculate_Pvalue</br>
 LearningCurve</br>
