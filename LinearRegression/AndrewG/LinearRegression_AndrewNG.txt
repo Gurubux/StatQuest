@@ -1,3 +1,4 @@
+"https://www.johnwittenauer.net/machine-learning-exercises-in-python-part-1/"
 -----------------------------------------------------------------------------------
 ANDREWG COURSERA - LINEAR REGRESSION
 https://www.coursera.org/learn/machine-learning/home/week/3

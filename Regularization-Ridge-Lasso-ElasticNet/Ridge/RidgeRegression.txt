@@ -99,3 +99,4 @@ ridgeReg.score(y_test,pred)
 
 
 -----------------------------------------------------------------------------------------------------
+https://github.com/Gurubux/StatQuest/blob/master/Regularization-Ridge-Lasso-ElasticNet/Ridge/Ridge.ipynb

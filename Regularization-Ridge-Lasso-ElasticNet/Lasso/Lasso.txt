@@ -44,7 +44,7 @@ lassoReg.fit(x_train,y_train)
 pred = lassoReg.predict(x_cv)
 
 
-
-
+------------------------------------------------------------------------------------------------------
+https://github.com/Gurubux/StatQuest/blob/master/Regularization-Ridge-Lasso-ElasticNet/Lasso/Lasso.ipynb
 
 
