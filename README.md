@@ -1,12 +1,12 @@
 # StatQuest
  StatQuest with Josh Starmer
-ConfidenceInterval
-Calculate_Pvalue
-LearningCurve
-Fitting_A_Curve
-Regularization-Ridge-Lasso-ElasticNet
-Probability VS Likelihood
-GradientDescent
-LogisticRegression
-LinearRegression
-GridSearchCV_RandomizedSearchCV
+ConfidenceInterval</br>
+Calculate_Pvalue</br>
+LearningCurve</br>
+Fitting_A_Curve</br>
+Regularization-Ridge-Lasso-ElasticNet</br>
+Probability VS Likelihood</br>
+GradientDescent</br>
+LogisticRegression</br>
+LinearRegression</br>
+GridSearchCV_RandomizedSearchCV</br>
