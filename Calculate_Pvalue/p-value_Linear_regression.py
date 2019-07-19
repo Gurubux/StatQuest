@@ -125,7 +125,7 @@ sd_b = np.sqrt(var_b)
 ts_b = params/ sd_b
 
 p_values =[2*(1-stats.t.cdf(np.abs(i),(len(newX)-1))) for i in ts_b]
-
+# 2* (1- CDF( t, n-p-1))
 sd_b = np.round(sd_b,3)
 ts_b = np.round(ts_b,3)
 p_values = np.round(p_values,3)
